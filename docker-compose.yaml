@@ -11,7 +11,7 @@ services:
       - /ghost/mysql:/var/lib/mysql
 
   ghost:
-    image: ghost:5-alpine
+    image: ghost:latest
     container_name: ghost
     restart: always
     depends_on:
