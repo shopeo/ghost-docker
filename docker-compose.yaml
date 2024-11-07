@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ghost
+    volumes:
+      - /ghost/mysql:/var/lib/mysql
+
+  ghost:
+    image: ghost:5-alpine
+    container_name: ghost
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      database__client: mysql
+      database__connection__host: mysql
+      database__connection__user: root
+      database__connection__password: ghost
+      database__connection__database: ghost
+      url: https://${DOMAIN_NAME}
+    volumes:
+      - /ghost/web:/var/lib/ghost/content
+
+  swag:
+    image: lscr.io/linuxserver/swag:latest
+    container_name: swag
+    depends_on:
+      - ghost
+    volumes:
+      - /ghost/nginx/config:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Shanghai
+      - URL=${DOMAIN_NAME}
+      - SUBDOMAINS=wildcard
+      - VALIDATION=http
+      - EMAIL=${ADMIN_EMAIL}
+    ports:
+      - 80:80
+      - 443:443
+    restart: unless-stopped
