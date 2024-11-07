@@ -36,9 +36,9 @@ services:
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Shanghai
+      - TZ=${TZ}
       - URL=${DOMAIN_NAME}
-      - SUBDOMAINS=wildcard
+      - SUBDOMAINS=${SUBDOMAINS}
       - VALIDATION=http
       - EMAIL=${ADMIN_EMAIL}
     ports:
