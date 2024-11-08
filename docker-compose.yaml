@@ -11,11 +11,6 @@ services:
       MYSQL_ROOT_PASSWORD: ghost
     volumes:
       - /ghost/mysql:/var/lib/mysql
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pghost" ]
-      interval: 10s
-      timeout: 5s
-      retries: 3
 
   ghost:
     image: ghost:latest
