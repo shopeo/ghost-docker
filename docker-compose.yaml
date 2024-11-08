@@ -5,7 +5,7 @@ services:
     image: mysql:8.0
     container_name: mysql
     restart: always
-    command: --default-authentication-plugin=mysql_native_password
+    command: --authentication_policy=mysql_native_password
     environment:
       MYSQL_DATABASE: ghost
       MYSQL_ROOT_PASSWORD: ghost
@@ -13,6 +13,8 @@ services:
       - /ghost/mysql:/var/lib/mysql
     ports:
       - 3306:3306
+    expose:
+      - 3306
 
   ghost:
     image: ghost:latest
