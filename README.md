@@ -14,5 +14,5 @@ ADMIN_EMAIL=webmaster@example.com
 ## Start container
 
 ```bash
-docker-compose up --env-file .env
+docker-compose up -d
 ```

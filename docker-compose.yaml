@@ -5,14 +5,12 @@ services:
     image: mysql:8.0
     container_name: mysql
     restart: always
+    command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_AUTHENTICATION_PLUGIN: mysql_native_password
       MYSQL_DATABASE: ghost
       MYSQL_ROOT_PASSWORD: ghost
     volumes:
       - /ghost/mysql:/var/lib/mysql
-    ports:
-      - 3306:3306
 
   ghost:
     image: ghost:latest
