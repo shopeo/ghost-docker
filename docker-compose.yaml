@@ -6,6 +6,7 @@ services:
     container_name: mysql
     restart: always
     environment:
+      MYSQL_DATABASE: ghost
       MYSQL_ROOT_PASSWORD: ghost
     volumes:
       - /ghost/mysql:/var/lib/mysql
