@@ -12,12 +12,33 @@ services:
     volumes:
       - /ghost/mysql:/var/lib/mysql
 
+  nginx:
+    image: nginxproxy/nginx-proxy:latest
+    container_name: nginx
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /ghost/nginx:/etc/nginx
+  acme:
+    image: nginxproxy/acme-companion:latest
+    container_name: acme
+    restart: always
+    depends_on:
+      - nginx
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /ghost/nginx:/etc/nginx
+      - /ghost/acme:/etc/acme.sh
   ghost:
     image: ghost:latest
     container_name: ghost
     restart: always
     depends_on:
       - mysql
+      - acme
     env_file:
       - .env
     environment:
@@ -27,29 +48,9 @@ services:
       database__connection__password: ghost
       database__connection__database: ghost
       url: https://${DOMAIN_NAME}
+      VIRTUAL_PORT: 2368
+      VIRTUAL_HOST: ${DOMAIN_NAME}
+      LETSENCRYPT_HOST: ${DOMAIN_NAME}
+      LETSENCRYPT_EMAIL: ${ADMIN_EMAIL}
     volumes:
       - /ghost/web:/var/lib/ghost/content
-    ports:
-      - 80:2368
-
-  swag:
-    image: lscr.io/linuxserver/swag:latest
-    container_name: swag
-    depends_on:
-      - ghost
-    volumes:
-      - /ghost/nginx/config:/config
-    env_file:
-      - .env
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=${TZ}
-      - URL=${DOMAIN_NAME}
-      - SUBDOMAINS=${SUBDOMAINS}
-      - VALIDATION=http
-      - EMAIL=${ADMIN_EMAIL}
-    ports:
-      - 80:80
-      - 443:443
-    restart: unless-stopped
