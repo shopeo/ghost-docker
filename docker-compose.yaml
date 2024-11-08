@@ -18,6 +18,8 @@ services:
     image: ghost:latest
     container_name: ghost
     restart: always
+    ports:
+      - 80:2368
     depends_on:
       - mysql
     env_file:
