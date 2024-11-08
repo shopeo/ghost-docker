@@ -29,6 +29,8 @@ services:
       url: https://${DOMAIN_NAME}
     volumes:
       - /ghost/web:/var/lib/ghost/content
+    ports:
+      - 80:2368
 
   swag:
     image: lscr.io/linuxserver/swag:latest
