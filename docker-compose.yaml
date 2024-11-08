@@ -28,10 +28,13 @@ services:
     restart: always
     depends_on:
       - nginx
+    environment:
+      NGINX_PROXY_CONTAINER: nginx
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /ghost/nginx:/etc/nginx
       - /ghost/acme:/etc/acme.sh
+
   ghost:
     image: ghost:latest
     container_name: ghost
