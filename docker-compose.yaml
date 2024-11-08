@@ -20,6 +20,8 @@ services:
     restart: always
     depends_on:
       - mysql
+    env_file:
+      - .env
     environment:
       database__client: mysql
       database__connection__host: mysql
@@ -37,6 +39,8 @@ services:
       - ghost
     volumes:
       - /ghost/nginx/config:/config
+    env_file:
+      - .env
     environment:
       - PUID=1000
       - PGID=1000
