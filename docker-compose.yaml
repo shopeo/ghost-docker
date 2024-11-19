@@ -50,7 +50,7 @@ services:
       database__connection__user: root
       database__connection__password: ghost
       database__connection__database: ghost
-      url: https://${DOMAIN_NAME}
+      url: https://${URL}
       VIRTUAL_PORT: 2368
       VIRTUAL_HOST: ${DOMAIN_NAME}
       LETSENCRYPT_HOST: ${DOMAIN_NAME}
