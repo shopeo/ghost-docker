@@ -7,7 +7,6 @@ create a file `.env` or copy the file `.env.example` to `.env` and set the value
 ```bash
 TZ=Shanghai
 DOMAIN_NAME=example.com
-SUBDOMAINS=www
 ADMIN_EMAIL=webmaster@example.com
 ```
 
