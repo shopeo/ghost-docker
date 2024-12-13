@@ -7,7 +7,7 @@ create a file `.env` or copy the file `.env.example` to `.env` and set the value
 ```bash
 URL=example.com
 DOMAIN_NAME=example.com,www.example.com
-ADMIN_EMAIL=webmaster@example.com
+LETSENCRYPT_EMAIL=webmaster@example.com
 ```
 
 ## Start container
